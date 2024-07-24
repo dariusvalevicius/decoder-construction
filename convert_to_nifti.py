@@ -35,7 +35,7 @@ def convert_dicom_to_nifti(dicom_dir, output_dir):
         os.makedirs(output_dir)
     
 
-    for sub_num in range(2,3):
+    for sub_num in range(3,4):
 
         for ses_num in range(1,5):
 
@@ -65,38 +65,6 @@ def convert_dicom_to_nifti(dicom_dir, output_dir):
                 except subprocess.CalledProcessError as e:
                     print("Conversion failed.")
                     print(e.stderr)
-
-    # for path, dir, files in os.walk(dicom_dir):
-    # # for path in os.listdir(dicom_dir):
-    #     dir = False
-
-    #     if not dir:
-
-    #         print(path)
-    #         # head_mri_dicom = Path(path)
-
-    #         # print(head_mri_dicom)
-
-    #         # try:
-    #         #     dicom2nifti.convert_directory(head_mri_dicom, "../data/nifti")
-    #         # except:
-    #         #     print(f"Conversion error on: {dir}")
-
-    #         command = [
-    #         'dcm2niix',
-    #         '-b', 'y',  # Generate BIDS sidecar JSON file
-    #         '-z', 'y',  # Compress NIfTI output
-    #         '-o', output_dir,  # Output directory
-    #         path  # Input DICOM directory
-    #     ]
-
-    #         try:
-    #             result = subprocess.run(command, check=True, capture_output=True, text=True)
-    #             # print("Conversion successful.")
-    #             # print(result.stdout)
-    #         except subprocess.CalledProcessError as e:
-    #             print("Conversion failed.")
-    #             print(e.stderr)
 
 
 

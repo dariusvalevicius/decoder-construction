@@ -67,7 +67,7 @@ if __name__ == "__main__":
     # Example usage
     input_directory = '../data/nifti'
     output_directory = '../data/bids'
-    subject_label = '02'
+    subject_label = '03'
 
     for ses_num in range(1,5):
         path = f'../data/nifti/sub-{subject_label}/ses-0{ses_num}'

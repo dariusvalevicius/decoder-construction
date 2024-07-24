@@ -1,5 +1,5 @@
 
-import os
+import os, shutil
 from tqdm import tqdm
 import json
 import numpy as np
@@ -24,13 +24,27 @@ for sub in range(1,2):
 
     ## For anatomical files, align to MNI space
 
-    mni_img = ants.image_read(datasets.fetch_icbm152_2009()['t1'])
-    target_img = ants.crop_image(ants.resample_image(mni_img, (3,3,3)))
+    # mni_img = ants.image_read(datasets.fetch_icbm152_2009()['t1'])
+    # mni_img_resampled = ants.resample_image(mni_img, (3,3,3))
+    # target_img = ants.crop_image(mni_img_resampled)
 
     anat_img = ants.image_read(f"{input_dir}/sub-0{sub}/ses-01/anat/sub-0{sub}_ses-01_T1w.nii.gz")
+    # anat_img_resampled = ants.resample_image(anat_img, (3,3,3))
 
-    anat_reg = ants.registration(mni_img, anat_img, type_of_transform="SyN")
-    # ants.image_write(anat_reg['warpedmovout'], 't1w_MNI.nii.gz')
+    # anat_reg_highres = ants.registration(mni_img, anat_img, type_of_transform="SyN")
+
+    # ants_reg_path = f"{output_dir}/sub-0{sub}/ses-01/anat/sub-0{sub}_ses-01_space-MNI_T1w.nii.gz"
+    # if not os.path.exists(f"{output_dir}/sub-0{sub}/ses-01/anat"):
+    #     os.makedirs(f"{output_dir}/sub-0{sub}/ses-01/anat")
+
+    # ants.image_write(anat_reg_highres['warpedmovout'], f"{output_dir}/sub-0{sub}/ses-01/anat/sub-0{sub}_ses-01_space-MNI_T1w.nii.gz")
+
+    # anat_reg = ants.registration(mni_img_resampled, anat_img_resampled, type_of_transform="SyN")
+    # # ants.image_write(anat_reg['warpedmovout'], 't1w_MNI.nii.gz')
+
+    # for file in anat_reg['fwdtransforms']:
+    #     dest_path = f"{output_dir}/sub-0{sub}/ses-01/anat"
+    #     shutil.copy(file, dest_path)
 
 
     # ants.plot(mni_img, overlay=anat_reg['warpedmovout'], overlay_alpha=0.5, crop=False)
@@ -49,18 +63,32 @@ for sub in range(1,2):
             images_unmerged = ants.ndimage_to_list( fmri )
             motion_corrected = list()
 
-            fmri_reg = ants.registration(anat_img, images_unmerged[0], type_of_transform="BOLDAffine")
-            transforms = fmri_reg['fwdtransforms'] + anat_reg['fwdtransforms']
+            if ses==1 and run==1:
+                fmri_ref = images_unmerged[0]
+                fmri_reg = ants.registration(anat_img, fmri_ref, type_of_transform="BOLDAffine")
+                target_img = ants.crop_image(ants.resample_image(fmri_reg['warpedmovout'], (3,3,3)))
 
+            # for file in fmri_reg['fwdtransforms']:
+            #     dest_path = f"{output_dir}/sub-0{sub}/ses-0{ses}/func"
+            #     shutil.copy(file, dest_path)
+                
+            transforms = fmri_reg['fwdtransforms']# + anat_reg['fwdtransforms']
+            # print(transforms)
 
-            for i in tqdm(len(images_unmerged)):
+            target_output_path = f"output/sub-{sub:02}"
+            if not os.path.exists(target_output_path):
+                os.makedirs(target_output_path)
+            ants.image_write(target_img, f"{target_output_path}/target_img.nii.gz")
+            # exit()
 
-                aligned = ants.registration( images_unmerged[0], images_unmerged[i], "BOLDAffine" )
-                areg = ants.apply_transforms(fixed = target_img, 
-                                                moving = aligned['warpedmovout'] , 
-                                                transformlist = transforms, 
-                                                interpolator  = 'nearestNeighbor')
-                motion_corrected.append( areg )
+            for i in tqdm(range(len(images_unmerged))):
+
+                aligned = ants.registration( target_img, images_unmerged[i], "BOLDAffine" )
+                # areg = ants.apply_transforms(fixed = target_img, 
+                #                                 moving = aligned['warpedmovout'] , 
+                #                                 transformlist = transforms, 
+                #                                 interpolator  = 'nearestNeighbor')
+                motion_corrected.append( aligned['warpedmovout'] )
 
             # Get the shape of the 3D images (assuming all images have the same shape)
             image_shape = motion_corrected[0].shape
@@ -91,65 +119,5 @@ for sub in range(1,2):
                 os.makedirs(path)
 
             ants.image_write( fmri_mc, mc_path )
-
-            # fmri_np = fmri_img.get_fdata()
-            # fmri_np = fmri_mc.numpy()
-
-            # # print(fmri_np.dtype)
-            # # affine = fmri_img.affine
-
-            # # Get slice timing info
-            # json_path = f"../data/bids/sub-0{sub}/ses-0{ses}/func/sub-0{sub}_ses-0{ses}_task-video_run-{run}_bold.json"
-
-            # with open(json_path) as json_file:
-            #     metadata = json.load(json_file)
-
-            # slice_timing = metadata["SliceTiming"]
-            # # print(slice_timing)
-
-            # tr = metadata['RepetitionTime']
-            # # print(tr)
-
-            # align_time = tr / 2
-
-
-            # fmri_st = np.copy(fmri_np)
-
-            # # print(fmri_np.shape)
-            # # For every frame, iterate through slices
-            # for i in range(1, 49):#fmri_np.shape[3] - 1):
-
-            #     for j in range(fmri_np.shape[2]):
-
-            #         t = slice_timing[j]
-                        
-            #         slice_t_minus_1 = fmri_np[..., j, i - 1]
-            #         slice_t = fmri_np[..., j, i]
-            #         slice_t_plus_1 = fmri_np[..., j, i + 1]
-                    
-            #         if t < align_time:
-            #             t1 = t
-            #             t2 = t + tr
-            #             val1 = slice_t
-            #             val2 = slice_t_plus_1
-            #         else:
-            #             t1 = t - tr
-            #             t2 = t
-            #             val1 = slice_t_minus_1
-            #             val2 = slice_t
-
-            #         fmri_st[..., j, i] = linear_interpolation(val1, val2, t1, t2, align_time)
-
-
-
-            # # corrected_img = nib.nifti1.Nifti1Image(fmri_st.astype("float32"), affine=affine)
-
-            
-            # output_filename = f"../data/derivatives/sub-0{sub}/ses-0{ses}/func/sub-0{sub}_ses-0{ses}_task-video_run-{run}_motion-corrected_slice-timing_bold.nii.gz"
-
-            # # nib.save(corrected_img, output_filename)
-
-            # ants.image_write(ants.from_numpy(fmri_st.astype("float32"), origin=origin_4d, spacing=spacing_4d, direction=direction_4d), output_filename)
-
 
 
