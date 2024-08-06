@@ -1,0 +1,11 @@
+numpy
+pandas
+nilearn
+nibabel
+dcm2niix
+antspyx
+brainextractor
+bids_validator
+scikit-learn
+tqdm
+matplotlib

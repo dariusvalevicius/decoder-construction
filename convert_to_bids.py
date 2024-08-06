@@ -1,7 +1,5 @@
 import os
 import json
-from bids import BIDSLayout
-import glob
 import shutil
 from bids_validator import BIDSValidator
 import re

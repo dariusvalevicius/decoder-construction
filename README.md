@@ -1,8 +1,8 @@
 # Decoder Construction for rt-fMRI Image Evolution
 
-Under construction!
+Under construction! This project is in the pilot phase, and may not work out-of-the-box on a new machine with new data.
 
-This repo contains the python code for creating model files for brain decoding of fear ratings. Input data from a Siemens machine are converted to NIfTI, and then BIDS format. There is then a script for image alignment in native space, followed by a Jupyter notebook for computing the Principal Component Analysis and logistic regression.
+This repo contains the python code for creating model files for brain decoding of fear ratings. Input data from a Siemens machine are converted to NIfTI, and then BIDS format. There is then a script for image alignment in native space, followed by a Jupyter notebook for computing the Principal Component Analysis and logistic regression. There are also the psychopy programs for video presentation and ratings, as well as the video stimuli.
 
 ## convert_to_nifti.py
 
@@ -22,7 +22,7 @@ Jupyter notebook that collects the fMRI and events data, and computes the PCA an
 
 Outputs are:
 
-- Brain mask (based on anatomical T1w scan)
+- Brain mask in native space (based on anatomical T1w scan)
 - NiftiMasker object (nilearn) for converting fMRI runs to 2D matrices
 - PCA model
 - Logistic regression models for fear, disgust, and cuteness predictions
