@@ -31,4 +31,4 @@ Outputs are:
 
 In the psychopy directory are two programs, one for online video presentation and one for offline (out-of-scanner) video rating. The video rating program is also adapted for web-based completion via Pavlovia, using the .js version of the program.
 
-Two stimulus sets, involving 200 animal videos comprised of 10 unique categories each, are also included. These videos are acquired with a Creative Commons license from websites including Pexels, Pixabay, Mixkit, and YouTube.
+Two stimulus sets, involving 200 animal videos comprised of 10 unique categories each, are also included. These videos are acquired with a Creative Commons license from websites including Pexels, Pixabay, Mixkit, and YouTube. Videos were processed by cropping to 3s in length and 768*512 pixels.
