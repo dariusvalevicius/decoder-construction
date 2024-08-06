@@ -35,9 +35,9 @@ def convert_dicom_to_nifti(dicom_dir, output_dir):
         os.makedirs(output_dir)
     
 
-    for sub_num in range(3,4):
+    for sub_num in range(1,2):
 
-        for ses_num in range(1,5):
+        for ses_num in range(5,6):
 
             path = os.path.join(dicom_dir, f"sub-0{sub_num}/ses-0{ses_num}")
 

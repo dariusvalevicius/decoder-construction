@@ -49,8 +49,8 @@ for sub in range(1,2):
 
     # ants.plot(mni_img, overlay=anat_reg['warpedmovout'], overlay_alpha=0.5, crop=False)
 
-    for ses in range(1,5):
-        for run in range(1,5):
+    for ses in range(5,6):
+        for run in range(1,6):
 
             fmri_path = f"{input_dir}/sub-0{sub}/ses-0{ses}/func/sub-0{sub}_ses-0{ses}_task-video_run-{run}_bold.nii.gz"
 
@@ -68,17 +68,22 @@ for sub in range(1,2):
                 fmri_reg = ants.registration(anat_img, fmri_ref, type_of_transform="BOLDAffine")
                 target_img = ants.crop_image(ants.resample_image(fmri_reg['warpedmovout'], (3,3,3)))
 
+                target_output_path = f"output/sub-{sub:02}"
+                if not os.path.exists(target_output_path):
+                    os.makedirs(target_output_path)
+                ants.image_write(target_img, f"{target_output_path}/target_img.nii.gz")
+            else:
+                target_output_path = f"output/sub-{sub:02}"
+                target_img = ants.image_read(f"{target_output_path}/target_img.nii.gz")
+
             # for file in fmri_reg['fwdtransforms']:
             #     dest_path = f"{output_dir}/sub-0{sub}/ses-0{ses}/func"
             #     shutil.copy(file, dest_path)
                 
-            transforms = fmri_reg['fwdtransforms']# + anat_reg['fwdtransforms']
+            # transforms = fmri_reg['fwdtransforms']# + anat_reg['fwdtransforms']
             # print(transforms)
 
-            target_output_path = f"output/sub-{sub:02}"
-            if not os.path.exists(target_output_path):
-                os.makedirs(target_output_path)
-            ants.image_write(target_img, f"{target_output_path}/target_img.nii.gz")
+
             # exit()
 
             for i in tqdm(range(len(images_unmerged))):

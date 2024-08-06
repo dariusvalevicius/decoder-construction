@@ -25,7 +25,12 @@ def organize_to_bids(input_dir, output_dir, subject_label):
                 modality = "anat"
             elif "task" in file:
                 modality = "func"
-                run = file.split('DecConst',1)[1].split('_')[0]
+
+                if "DecConst" in file:
+                    run = file.split('DecConst',1)[1].split('_')[0]
+                elif "RT" in file:
+                    run = file.split('RT',1)[1].split('_')[0]
+
 
             # Build BIDS filename based on metadata
             if modality == "anat":
@@ -67,9 +72,9 @@ if __name__ == "__main__":
     # Example usage
     input_directory = '../data/nifti'
     output_directory = '../data/bids'
-    subject_label = '03'
+    subject_label = '01'
 
-    for ses_num in range(1,5):
+    for ses_num in range(5,6):
         path = f'../data/nifti/sub-{subject_label}/ses-0{ses_num}'
         if os.path.exists(path):
             organize_to_bids(f'../data/nifti/sub-{subject_label}/ses-0{ses_num}', output_directory, subject_label)
