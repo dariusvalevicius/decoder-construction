@@ -1,2 +1,6 @@
 *.nii.gz
 archive
+figures
+video
+__pycache__
+code
