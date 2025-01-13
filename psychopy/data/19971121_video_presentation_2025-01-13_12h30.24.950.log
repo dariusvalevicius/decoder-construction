@@ -1,0 +1,229 @@
+9.1816 	WARNING 	Requested an unavailable screen number - using first available.
+9.1859 	WARNING 	User requested fullscreen with size [1536  864], but screen is actually [1920, 1080]. Using actual size
+11.0589 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x000001C4AADA8C70>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x000001C4AADA8C10>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x000001C4AADA8A60>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x000001C4AB1A2460>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=1, size=array([1920, 1080]), stencilBits=0, stereo=False, title='PsychoPy', units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+11.0590 	EXP 	window1: mouseVisible = True
+11.0590 	EXP 	window1: backgroundImage = ''
+11.0590 	EXP 	window1: backgroundFit = 'none'
+11.0606 	EXP 	window1: Attempting to measure frame rate of screen (1) ...
+11.0606 	EXP 	window1: recordFrameIntervals = False
+11.1349 	EXP 	window1: recordFrameIntervals = True
+11.2115 	EXP 	Screen (1) actual frame rate measured at 143.91Hz
+11.2116 	EXP 	window1: recordFrameIntervals = False
+11.2117 	EXP 	window1: mouseVisible = False
+13.0022 	EXP 	video_presentation: status = STARTED
+13.0070 	EXP 	window1: mouseVisible = True
+13.0575 	EXP 	Created text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, draggable=False, flipHoriz=True, flipVert=False, font='Open Sans', fontFiles=[], height=0.04, italic=False, languageStyle='LTR', name='text', opacity=1.0, ori=0.0, pos=array([0.  , 0.25]), rgb=UNKNOWN, text=str(...), units='height', win=Window(...), wrapWidth=1)
+13.0576 	EXP 	window1: mouseVisible = True
+13.0981 	EXP 	Created instruction_image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-3.0, draggable=False, flipHoriz=True, flipVert=False, image='images/rating_instruction.png', interpolate=True, mask=None, maskParams=None, name='instruction_image', opacity=1.0, ori=0.0, pos=array([ 0. , -0.2]), size=array([0.75, 0.5 ]), texRes=128.0, units='height', win=Window(...))
+13.0983 	EXP 	window1: mouseVisible = True
+13.1009 	EXP 	Created dummy_fixation_cross = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, draggable=False, fillColor=array([-1, -1, -1]), fillColorSpace='rgb', fillRGB=array([-1, -1, -1]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1, -1, -1]), lineWidth=1.0, name='dummy_fixation_cross', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.05, 0.05]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+13.1010 	EXP 	window1: mouseVisible = True
+13.1026 	EXP 	Created rating_fixation_square = Rect(__class__=<class 'psychopy.visual.rect.Rect'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-1.0, draggable=False, fillColor=array([-1, -1, -1]), fillColorSpace='rgb', fillRGB=array([-1, -1, -1]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1, -1, -1]), lineWidth=1.0, name='rating_fixation_square', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.05, 0.05]), units='height', vertices=ndarray(...), win=Window(...))
+13.1027 	EXP 	window1: mouseVisible = True
+13.1047 	EXP 	Created washout_fixation_cross = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, draggable=False, fillColor=array([-1, -1, -1]), fillColorSpace='rgb', fillRGB=array([-1, -1, -1]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1, -1, -1]), lineWidth=1.0, name='washout_fixation_cross', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.05, 0.05]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+13.1048 	EXP 	window1: mouseVisible = True
+13.1141 	EXP 	Created end_text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=True, flipVert=False, font='Open Sans', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='end_text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='Run complete.', units='height', win=Window(...), wrapWidth=1)
+0.0154 	EXP 	text: autoDraw = True
+0.0154 	EXP 	instruction_image: autoDraw = True
+2.2401 	DATA 	Keypress: 5
+2.2447 	EXP 	text: autoDraw = False
+2.2447 	EXP 	instruction_image: autoDraw = False
+2.2447 	EXP 	dummy_fixation_cross: autoDraw = True
+12.2400 	EXP 	Created sequence: sequential, trialTypes=1, nReps=10, seed=None
+12.2404 	EXP 	New trial (rep=0, index=0): None
+12.3633 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\crocodile_13.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+12.5299 	WARNING 	0.16652040000008128: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.016666666666666666
+12.5299 	WARNING 	0.16657420000001366: Video catchup needed, advancing self._nextFrameT from 0.016666666666666666 to 0.03333333333333333
+12.5299 	WARNING 	0.16660120000005918: Video catchup needed, advancing self._nextFrameT from 0.03333333333333333 to 0.05
+12.5300 	WARNING 	0.16662319999977626: Video catchup needed, advancing self._nextFrameT from 0.05 to 0.06666666666666667
+12.5300 	WARNING 	0.16664540000010675: Video catchup needed, advancing self._nextFrameT from 0.06666666666666667 to 0.08333333333333333
+12.5300 	WARNING 	0.16666959999975006: Video catchup needed, advancing self._nextFrameT from 0.08333333333333333 to 0.09999999999999999
+12.5300 	WARNING 	0.16669389999970008: Video catchup needed, advancing self._nextFrameT from 0.09999999999999999 to 0.11666666666666665
+12.5300 	WARNING 	0.16671769999993558: Video catchup needed, advancing self._nextFrameT from 0.11666666666666665 to 0.13333333333333333
+12.5301 	WARNING 	0.16674030000012863: Video catchup needed, advancing self._nextFrameT from 0.13333333333333333 to 0.15
+12.5527 	EXP 	dummy_fixation_cross: autoDraw = False
+12.5527 	EXP 	movie: autoLog = True
+12.5527 	EXP 	movie: movie = 'videos\\crocodile_13.mp4'
+12.5527 	EXP 	movie: ori = 0.0
+12.5527 	EXP 	movie: flipHoriz = True
+12.5527 	EXP 	movie: autoDraw = True
+15.2461 	EXP 	movie: autoDraw = False
+15.2461 	EXP 	rating_fixation_square: autoDraw = True
+15.9422 	DATA 	Keypress: 1
+15.9653 	EXP 	rating_fixation_square: autoDraw = False
+15.9653 	EXP 	washout_fixation_cross: autoDraw = True
+16.9492 	EXP 	New trial (rep=1, index=0): None
+16.9503 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\cat_17.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+17.1661 	WARNING 	0.21572040000000925: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.04
+17.1661 	WARNING 	0.21575919999986581: Video catchup needed, advancing self._nextFrameT from 0.04 to 0.08
+17.1661 	WARNING 	0.21577539999998407: Video catchup needed, advancing self._nextFrameT from 0.08 to 0.12
+17.1661 	WARNING 	0.21578999999974258: Video catchup needed, advancing self._nextFrameT from 0.12 to 0.16
+17.1856 	EXP 	washout_fixation_cross: autoDraw = False
+17.1856 	EXP 	movie: autoLog = True
+17.1856 	EXP 	movie: movie = 'videos\\cat_17.mp4'
+17.1856 	EXP 	movie: ori = 0.0
+17.1856 	EXP 	movie: flipHoriz = True
+17.1856 	EXP 	movie: autoDraw = True
+19.9327 	EXP 	Set movie finished
+19.9609 	EXP 	movie: autoDraw = False
+19.9609 	EXP 	rating_fixation_square: autoDraw = True
+20.2671 	DATA 	Keypress: 2
+20.2732 	EXP 	rating_fixation_square: autoDraw = False
+20.2732 	EXP 	washout_fixation_cross: autoDraw = True
+21.2675 	EXP 	New trial (rep=2, index=0): None
+21.2683 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\shark_14.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+21.4346 	WARNING 	0.16622789999973975: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.03333333333333333
+21.4346 	WARNING 	0.16626809999979741: Video catchup needed, advancing self._nextFrameT from 0.03333333333333333 to 0.06666666666666667
+21.4346 	WARNING 	0.1662851999999475: Video catchup needed, advancing self._nextFrameT from 0.06666666666666667 to 0.1
+21.4418 	WARNING 	0.17348039999978937: Video catchup needed, advancing self._nextFrameT from 0.1 to 0.13333333333333333
+21.4480 	EXP 	washout_fixation_cross: autoDraw = False
+21.4480 	EXP 	washout_fixation_cross: autoDraw = False
+21.4480 	EXP 	movie: autoLog = True
+21.4480 	EXP 	movie: movie = 'videos\\shark_14.mp4'
+21.4480 	EXP 	movie: ori = 0.0
+21.4480 	EXP 	movie: flipHoriz = True
+21.4480 	EXP 	movie: autoDraw = True
+24.2795 	EXP 	movie: autoDraw = False
+24.2795 	EXP 	rating_fixation_square: autoDraw = True
+24.7486 	DATA 	Keypress: 3
+24.7545 	EXP 	rating_fixation_square: autoDraw = False
+24.7545 	EXP 	washout_fixation_cross: autoDraw = True
+25.7488 	EXP 	New trial (rep=3, index=0): None
+25.7494 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\spider_13.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+25.9139 	WARNING 	0.16437980000000607: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.03336666666666667
+25.9139 	WARNING 	0.1644470999999612: Video catchup needed, advancing self._nextFrameT from 0.03336666666666667 to 0.06673333333333334
+25.9139 	WARNING 	0.16448459999992338: Video catchup needed, advancing self._nextFrameT from 0.06673333333333334 to 0.10010000000000001
+25.9213 	WARNING 	0.17189719999987574: Video catchup needed, advancing self._nextFrameT from 0.10010000000000001 to 0.13346666666666668
+25.9307 	EXP 	washout_fixation_cross: autoDraw = False
+25.9307 	EXP 	washout_fixation_cross: autoDraw = False
+25.9307 	EXP 	movie: autoLog = True
+25.9307 	EXP 	movie: movie = 'videos\\spider_13.mp4'
+25.9307 	EXP 	movie: ori = 0.0
+25.9307 	EXP 	movie: flipHoriz = True
+25.9307 	EXP 	movie: autoDraw = True
+28.7401 	EXP 	Set movie finished
+28.7615 	EXP 	movie: autoDraw = False
+28.7615 	EXP 	rating_fixation_square: autoDraw = True
+29.2350 	DATA 	Keypress: 4
+29.2475 	EXP 	rating_fixation_square: autoDraw = False
+29.2475 	EXP 	washout_fixation_cross: autoDraw = True
+30.2416 	EXP 	New trial (rep=4, index=0): None
+30.2423 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\horse_16.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+30.4055 	WARNING 	0.1631334999997307: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.041666666666666664
+30.4055 	WARNING 	0.16320419999965452: Video catchup needed, advancing self._nextFrameT from 0.041666666666666664 to 0.08333333333333333
+30.4121 	WARNING 	0.1697386999999253: Video catchup needed, advancing self._nextFrameT from 0.08333333333333333 to 0.125
+30.4236 	EXP 	washout_fixation_cross: autoDraw = False
+30.4236 	EXP 	washout_fixation_cross: autoDraw = False
+30.4236 	EXP 	movie: autoLog = True
+30.4236 	EXP 	movie: movie = 'videos\\horse_16.mp4'
+30.4236 	EXP 	movie: ori = 0.0
+30.4236 	EXP 	movie: flipHoriz = True
+30.4236 	EXP 	movie: autoDraw = True
+33.2546 	EXP 	movie: autoDraw = False
+33.2546 	EXP 	rating_fixation_square: autoDraw = True
+33.7203 	DATA 	Keypress: 6
+33.7263 	EXP 	rating_fixation_square: autoDraw = False
+33.7263 	EXP 	washout_fixation_cross: autoDraw = True
+34.7212 	EXP 	New trial (rep=5, index=0): None
+34.7221 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\tiger_15.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+34.9444 	WARNING 	0.22220299999980853: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.04
+34.9444 	WARNING 	0.2222418999999718: Video catchup needed, advancing self._nextFrameT from 0.04 to 0.08
+34.9444 	WARNING 	0.2222567999997409: Video catchup needed, advancing self._nextFrameT from 0.08 to 0.12
+34.9444 	WARNING 	0.2222689000000173: Video catchup needed, advancing self._nextFrameT from 0.12 to 0.16
+34.9592 	EXP 	washout_fixation_cross: autoDraw = False
+34.9592 	EXP 	washout_fixation_cross: autoDraw = False
+34.9592 	EXP 	movie: autoLog = True
+34.9592 	EXP 	movie: movie = 'videos\\tiger_15.mp4'
+34.9592 	EXP 	movie: ori = 0.0
+34.9592 	EXP 	movie: flipHoriz = True
+34.9592 	EXP 	movie: autoDraw = True
+37.6997 	EXP 	Set movie finished
+37.7347 	EXP 	movie: autoDraw = False
+37.7347 	EXP 	rating_fixation_square: autoDraw = True
+42.7282 	EXP 	rating_fixation_square: autoDraw = False
+42.7282 	EXP 	washout_fixation_cross: autoDraw = True
+43.7218 	EXP 	New trial (rep=6, index=0): None
+43.7227 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\wasp_7.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+43.9352 	WARNING 	0.2124521000000641: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.04
+43.9352 	WARNING 	0.21248970000033296: Video catchup needed, advancing self._nextFrameT from 0.04 to 0.08
+43.9352 	WARNING 	0.2125149000003148: Video catchup needed, advancing self._nextFrameT from 0.08 to 0.12
+43.9353 	WARNING 	0.21254980000003343: Video catchup needed, advancing self._nextFrameT from 0.12 to 0.16
+43.9497 	EXP 	washout_fixation_cross: autoDraw = False
+43.9497 	EXP 	movie: autoLog = True
+43.9497 	EXP 	movie: movie = 'videos\\wasp_7.mp4'
+43.9497 	EXP 	movie: ori = 0.0
+43.9497 	EXP 	movie: flipHoriz = True
+43.9497 	EXP 	movie: autoDraw = True
+46.7039 	EXP 	Set movie finished
+46.7322 	EXP 	movie: autoDraw = False
+46.7322 	EXP 	rating_fixation_square: autoDraw = True
+47.0243 	DATA 	Keypress: 1
+47.0306 	EXP 	rating_fixation_square: autoDraw = False
+47.0306 	EXP 	washout_fixation_cross: autoDraw = True
+48.0247 	EXP 	New trial (rep=7, index=0): None
+48.0255 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\whale_13.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+48.2003 	WARNING 	0.17469100000016624: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.03336666666666667
+48.2003 	WARNING 	0.17477790000020832: Video catchup needed, advancing self._nextFrameT from 0.03336666666666667 to 0.06673333333333334
+48.2003 	WARNING 	0.17480320000004212: Video catchup needed, advancing self._nextFrameT from 0.06673333333333334 to 0.10010000000000001
+48.2004 	WARNING 	0.17483880000008867: Video catchup needed, advancing self._nextFrameT from 0.10010000000000001 to 0.13346666666666668
+48.2186 	EXP 	washout_fixation_cross: autoDraw = False
+48.2186 	EXP 	washout_fixation_cross: autoDraw = False
+48.2186 	EXP 	movie: autoLog = True
+48.2186 	EXP 	movie: movie = 'videos\\whale_13.mp4'
+48.2186 	EXP 	movie: ori = 0.0
+48.2186 	EXP 	movie: flipHoriz = True
+48.2186 	EXP 	movie: autoDraw = True
+51.0142 	EXP 	Set movie finished
+51.0357 	EXP 	movie: autoDraw = False
+51.0357 	EXP 	rating_fixation_square: autoDraw = True
+51.3904 	DATA 	Keypress: 2
+51.3965 	EXP 	rating_fixation_square: autoDraw = False
+51.3965 	EXP 	washout_fixation_cross: autoDraw = True
+52.3904 	EXP 	New trial (rep=8, index=0): None
+52.3910 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\millipede_17.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+52.5602 	WARNING 	0.1691662000002907: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.03336666666666667
+52.5602 	WARNING 	0.16921860000002198: Video catchup needed, advancing self._nextFrameT from 0.03336666666666667 to 0.06673333333333334
+52.5602 	WARNING 	0.1692443000001731: Video catchup needed, advancing self._nextFrameT from 0.06673333333333334 to 0.10010000000000001
+52.5603 	WARNING 	0.1692670000002181: Video catchup needed, advancing self._nextFrameT from 0.10010000000000001 to 0.13346666666666668
+52.5836 	EXP 	washout_fixation_cross: autoDraw = False
+52.5836 	EXP 	washout_fixation_cross: autoDraw = False
+52.5836 	EXP 	movie: autoLog = True
+52.5836 	EXP 	movie: movie = 'videos\\millipede_17.mp4'
+52.5836 	EXP 	movie: ori = 0.0
+52.5836 	EXP 	movie: flipHoriz = True
+52.5836 	EXP 	movie: autoDraw = True
+55.3772 	EXP 	Set movie finished
+55.3985 	EXP 	movie: autoDraw = False
+55.3985 	EXP 	rating_fixation_square: autoDraw = True
+55.8434 	DATA 	Keypress: 3
+55.8499 	EXP 	rating_fixation_square: autoDraw = False
+55.8499 	EXP 	washout_fixation_cross: autoDraw = True
+56.8438 	EXP 	New trial (rep=9, index=0): None
+56.8445 	EXP 	Created movie = MovieStim3(__class__=<class 'psychopy.visual.movie3.MovieStim3'>, anchor=('center', 'center'), autoLog=True, color=UNKNOWN, colorSpace=UNKNOWN, depth=-1.0, filename='videos\\tiger_11.mp4', flipHoriz=False, flipVert=False, fps=UNKNOWN, interpolate=True, loop=False, name='movie', noAudio=True, opacity=1, ori=method-wrapper(...), pos=array([0., 0.]), size=None, units='height', vframe_callback=UNKNOWN, volume=UNKNOWN, win=Window(...))
+57.0066 	WARNING 	0.16199409999990166: Video catchup needed, advancing self._nextFrameT from 0.0 to 0.016666666666666666
+57.0066 	WARNING 	0.1620522999996865: Video catchup needed, advancing self._nextFrameT from 0.016666666666666666 to 0.03333333333333333
+57.0066 	WARNING 	0.16208030000007057: Video catchup needed, advancing self._nextFrameT from 0.03333333333333333 to 0.05
+57.0066 	WARNING 	0.1621034999998301: Video catchup needed, advancing self._nextFrameT from 0.05 to 0.06666666666666667
+57.0067 	WARNING 	0.1621251999999913: Video catchup needed, advancing self._nextFrameT from 0.06666666666666667 to 0.08333333333333333
+57.0067 	WARNING 	0.1621461999998246: Video catchup needed, advancing self._nextFrameT from 0.08333333333333333 to 0.09999999999999999
+57.0067 	WARNING 	0.16216739999981655: Video catchup needed, advancing self._nextFrameT from 0.09999999999999999 to 0.11666666666666665
+57.0067 	WARNING 	0.16218810000009398: Video catchup needed, advancing self._nextFrameT from 0.11666666666666665 to 0.13333333333333333
+57.0178 	WARNING 	0.17329909999989468: Video catchup needed, advancing self._nextFrameT from 0.13333333333333333 to 0.15
+57.0259 	EXP 	washout_fixation_cross: autoDraw = False
+57.0259 	EXP 	washout_fixation_cross: autoDraw = False
+57.0259 	EXP 	movie: autoLog = True
+57.0259 	EXP 	movie: movie = 'videos\\tiger_11.mp4'
+57.0259 	EXP 	movie: ori = 0.0
+57.0259 	EXP 	movie: flipHoriz = True
+57.0259 	EXP 	movie: autoDraw = True
+59.8566 	EXP 	movie: autoDraw = False
+59.8566 	EXP 	rating_fixation_square: autoDraw = True
+60.2876 	DATA 	Keypress: 4
+60.2940 	EXP 	rating_fixation_square: autoDraw = False
+60.2940 	EXP 	washout_fixation_cross: autoDraw = True
+61.2942 	EXP 	washout_fixation_cross: autoDraw = False
+61.2942 	EXP 	washout_fixation_cross: autoDraw = False
+61.2942 	EXP 	end_text: autoDraw = True
+71.2997 	EXP 	end_text: autoDraw = False
+71.2998 	EXP 	video_presentation: status = STOPPED
+72.7717 	EXP 	window1: mouseVisible = True
