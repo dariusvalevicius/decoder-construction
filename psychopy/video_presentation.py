@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on January 13, 2025, at 12:39
+    on January 29, 2025, at 16:52
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -40,7 +40,9 @@ import numpy as np
 import os
 
 
-num_stimuli = 100
+#num_stimuli = 100
+
+
 # --- Setup global variables (available in all functions) ---
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -51,6 +53,7 @@ expInfo = {
     'participant': f"{randint(0, 999999):06.0f}",
     'session': '999',
     'run': '999',
+    'num_stimuli': '100',
     'date': data.getDateStr(),  # add a simple timestamp
     'expName': expName,
     'psychopyVersion': psychopyVersion,
@@ -116,7 +119,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='C:\\Users\\dariu\\Documents\\PhD\\ImageGeneration\\repo\\decoder-construction\\psychopy\\video_presentation_lastrun.py',
+        originPath='C:\\Users\\dariu\\Documents\\PhD\\ImageGeneration\\repo\\decoder-construction\\psychopy\\video_presentation.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -167,7 +170,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1536, 864], fullscr=True, screen=1,
+            size=[1920, 1080], fullscr=True, screen=1,
             winType='pyglet', allowStencil=False,
             monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -330,6 +333,17 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     session = expInfo['session']
     run = expInfo['run']
     
+    num_stimuli = int(expInfo["num_stimuli"])
+    if num_stimuli % 2 != 0:
+        raise Exception("Num stimuli must be positive!")
+    
+    rating_order = np.random.choice([1,2], 2, replace=False)
+    rating_dicts = [
+        {"1": 0, "2": 1, "3": 2, "4": 3, "6": 4},
+        {"1": 4, "2": 3, "3": 2, "4": 1, "6": 0}
+        ]
+    rating_dict = rating_dicts[rating_order[0] - 1]
+    
     # Get images
     video_path = f"videos"
     video_list = os.listdir(video_path)
@@ -340,20 +354,23 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     #df["trial"] = [file.split(".")[0] for file in df["file"]]
     #df["type"] = ["image" if ".png" in file else "video" for file in df["file"]]
     #df["category"] = [file.split("_")[0] for file in df["file"]]
-    df["onset"] = np.empty(len(video_list)) * np.nan
-    df["duration"] = np.empty(len(video_list)) * np.nan
-    df["rating"] = np.empty(len(video_list)) * np.nan
-    df["response_time"] = np.empty(len(video_list)) * np.nan
     
-    
-    # Get 150 videos at random
+    # Get videos at random
     random_indices = np.random.choice(np.arange(len(video_list)), size=num_stimuli, replace=False)
     df = df.iloc[random_indices, :]
     
     # Random shuffle
     df = df.sample(frac=1).reset_index(drop=True)
+    
+    df["onset"] = np.empty(num_stimuli) * np.nan
+    df["duration"] = np.empty(num_stimuli) * np.nan
+    df["rating"] = np.empty(num_stimuli) * np.nan
+    df["response_time"] = np.empty(num_stimuli) * np.nan
+    df["rating_order"] = np.repeat(rating_order, num_stimuli/2)
+    df["button"] = np.empty(num_stimuli) * np.nan
+    
     text = visual.TextStim(win=win, name='text',
-        text='The experiment will begin soon.\n\nAfter each video, you will see a black square. You will have 5 seconds to make a rating on the remote according to the scale shown below.',
+        text='After each video, you will see a black square. You will have 5 seconds to make a rating on the remote according to the system below.\n\nAt the halfway point, you will be asked to reverse the rating scale',
         font='Open Sans',
         pos=(0, 0.25), height=0.04, wrapWidth=None, ori=0.0, 
         color='black', colorSpace='rgb', opacity=None, 
@@ -362,7 +379,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     instruction_image = visual.ImageStim(
         win=win,
         name='instruction_image', 
-        image='images/rating_instruction.png', mask=None, anchor='center',
+        image=f"images/rating_instruction_{rating_order[0]}.png", mask=None, anchor='center',
         ori=0.0, pos=(0, -0.15), size=(0.75, 0.5),
         color=[1,1,1], colorSpace='rgb', opacity=None,
         flipHoriz=True, flipVert=False,
@@ -371,6 +388,32 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     # --- Initialize components for Routine "dummy" ---
     dummy_fixation_cross = visual.ShapeStim(
         win=win, name='dummy_fixation_cross', vertices='cross',
+        size=(0.05, 0.05),
+        ori=0.0, pos=(0, 0), anchor='center',
+        lineWidth=1.0,     colorSpace='rgb',  lineColor='black', fillColor='black',
+        opacity=None, depth=0.0, interpolate=True)
+    
+    # --- Initialize components for Routine "rating_switch" ---
+    rating_instruction_img = visual.ImageStim(
+        win=win,
+        name='rating_instruction_img', 
+        image=f"images/rating_instruction_{rating_order[1]}.png", mask=None, anchor='center',
+        ori=0.0, pos=(0, -0.15), size=(0.75, 0.5),
+        color=[1,1,1], colorSpace='rgb', opacity=None,
+        flipHoriz=True, flipVert=False,
+        texRes=128.0, interpolate=True, depth=0.0)
+    rating_instruction_text = visual.TextStim(win=win, name='rating_instruction_text',
+        text='For the rest of this run, please reverse the way you rate the videos. Use the rating system below.\n\nPress any button to continue.',
+        font='Open Sans',
+        pos=(0, 0.25), height=0.04, wrapWidth=None, ori=0.0, 
+        color='black', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        flipHoriz=True, depth=-1.0);
+    rating_instruction_key_resp = keyboard.Keyboard()
+    
+    # --- Initialize components for Routine "washout" ---
+    washout_fixation_cross = visual.ShapeStim(
+        win=win, name='washout_fixation_cross', vertices='cross',
         size=(0.05, 0.05),
         ori=0.0, pos=(0, 0), anchor='center',
         lineWidth=1.0,     colorSpace='rgb',  lineColor='black', fillColor='black',
@@ -472,6 +515,25 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 key_resp_start.duration = _key_resp_start_allKeys[-1].duration
                 # a response ends the routine
                 continueRoutine = False
+        # Run 'Each Frame' code from code
+        ## Define key mapping
+        #x_pos_dict = {"1": -0.2, "2": -0.1, "3": 0, "4": 0.1, "6": 0.2}
+        #
+        ## Get kepress
+        #keys = event.getKeys(keyList=['1', '2', '3', '4', '6'])
+        #
+        #if keys:
+        #    if not 'marker' in locals():
+        #        x_pos = x_pos_dict[keys[0]]
+        #        marker = visual.ShapeStim(win=win, pos=(0, -0.475), size=(0.05, 0.05), fillColor=[0, 0.75, 0], lineColor=[0, 0, 0], vertices='circle')
+        #        marker.pos = (x_pos * -1, -0.4)
+        #        marker.setAutoDraw(True)
+        #else:
+        #    if 'marker' in locals():
+        #        core.wait(0.5)
+        #        marker.setAutoDraw(False)
+        #        del marker
+        #
         
         # *text* updates
         
@@ -675,6 +737,239 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             for paramName in thisTrial:
                 globals()[paramName] = thisTrial[paramName]
         
+        # --- Prepare to start Routine "rating_switch" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        thisExp.addData('rating_switch.started', globalClock.getTime())
+        rating_instruction_key_resp.keys = []
+        rating_instruction_key_resp.rt = []
+        _rating_instruction_key_resp_allKeys = []
+        # Run 'Begin Routine' code from rating_switch_code
+        if trials.thisN == num_stimuli / 2:
+            rating_dict = rating_dicts[rating_order[1] - 1]
+        else:  
+            continueRoutine = False
+        # keep track of which components have finished
+        rating_switchComponents = [rating_instruction_img, rating_instruction_text, rating_instruction_key_resp]
+        for thisComponent in rating_switchComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "rating_switch" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *rating_instruction_img* updates
+            
+            # if rating_instruction_img is starting this frame...
+            if rating_instruction_img.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                rating_instruction_img.frameNStart = frameN  # exact frame index
+                rating_instruction_img.tStart = t  # local t and not account for scr refresh
+                rating_instruction_img.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(rating_instruction_img, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'rating_instruction_img.started')
+                # update status
+                rating_instruction_img.status = STARTED
+                rating_instruction_img.setAutoDraw(True)
+            
+            # if rating_instruction_img is active this frame...
+            if rating_instruction_img.status == STARTED:
+                # update params
+                pass
+            
+            # *rating_instruction_text* updates
+            
+            # if rating_instruction_text is starting this frame...
+            if rating_instruction_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                rating_instruction_text.frameNStart = frameN  # exact frame index
+                rating_instruction_text.tStart = t  # local t and not account for scr refresh
+                rating_instruction_text.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(rating_instruction_text, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'rating_instruction_text.started')
+                # update status
+                rating_instruction_text.status = STARTED
+                rating_instruction_text.setAutoDraw(True)
+            
+            # if rating_instruction_text is active this frame...
+            if rating_instruction_text.status == STARTED:
+                # update params
+                pass
+            
+            # *rating_instruction_key_resp* updates
+            waitOnFlip = False
+            
+            # if rating_instruction_key_resp is starting this frame...
+            if rating_instruction_key_resp.status == NOT_STARTED and tThisFlip >= 1.0-frameTolerance:
+                # keep track of start time/frame for later
+                rating_instruction_key_resp.frameNStart = frameN  # exact frame index
+                rating_instruction_key_resp.tStart = t  # local t and not account for scr refresh
+                rating_instruction_key_resp.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(rating_instruction_key_resp, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'rating_instruction_key_resp.started')
+                # update status
+                rating_instruction_key_resp.status = STARTED
+                # keyboard checking is just starting
+                waitOnFlip = True
+                win.callOnFlip(rating_instruction_key_resp.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(rating_instruction_key_resp.clearEvents, eventType='keyboard')  # clear events on next screen flip
+            if rating_instruction_key_resp.status == STARTED and not waitOnFlip:
+                theseKeys = rating_instruction_key_resp.getKeys(keyList=['1', '2', '3', '4', '6'], ignoreKeys=["escape"], waitRelease=False)
+                _rating_instruction_key_resp_allKeys.extend(theseKeys)
+                if len(_rating_instruction_key_resp_allKeys):
+                    rating_instruction_key_resp.keys = _rating_instruction_key_resp_allKeys[-1].name  # just the last key pressed
+                    rating_instruction_key_resp.rt = _rating_instruction_key_resp_allKeys[-1].rt
+                    rating_instruction_key_resp.duration = _rating_instruction_key_resp_allKeys[-1].duration
+                    # a response ends the routine
+                    continueRoutine = False
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, inputs=inputs, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in rating_switchComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "rating_switch" ---
+        for thisComponent in rating_switchComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        thisExp.addData('rating_switch.stopped', globalClock.getTime())
+        # check responses
+        if rating_instruction_key_resp.keys in ['', [], None]:  # No response was made
+            rating_instruction_key_resp.keys = None
+        trials.addData('rating_instruction_key_resp.keys',rating_instruction_key_resp.keys)
+        if rating_instruction_key_resp.keys != None:  # we had a response
+            trials.addData('rating_instruction_key_resp.rt', rating_instruction_key_resp.rt)
+            trials.addData('rating_instruction_key_resp.duration', rating_instruction_key_resp.duration)
+        # the Routine "rating_switch" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
+        
+        # --- Prepare to start Routine "washout" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        thisExp.addData('washout.started', globalClock.getTime())
+        # keep track of which components have finished
+        washoutComponents = [washout_fixation_cross]
+        for thisComponent in washoutComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "washout" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine and routineTimer.getTime() < 1.0:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *washout_fixation_cross* updates
+            
+            # if washout_fixation_cross is starting this frame...
+            if washout_fixation_cross.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                washout_fixation_cross.frameNStart = frameN  # exact frame index
+                washout_fixation_cross.tStart = t  # local t and not account for scr refresh
+                washout_fixation_cross.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(washout_fixation_cross, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'washout_fixation_cross.started')
+                # update status
+                washout_fixation_cross.status = STARTED
+                washout_fixation_cross.setAutoDraw(True)
+            
+            # if washout_fixation_cross is active this frame...
+            if washout_fixation_cross.status == STARTED:
+                # update params
+                pass
+            
+            # if washout_fixation_cross is stopping this frame...
+            if washout_fixation_cross.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > washout_fixation_cross.tStartRefresh + 1-frameTolerance:
+                    # keep track of stop time/frame for later
+                    washout_fixation_cross.tStop = t  # not accounting for scr refresh
+                    washout_fixation_cross.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'washout_fixation_cross.stopped')
+                    # update status
+                    washout_fixation_cross.status = FINISHED
+                    washout_fixation_cross.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, inputs=inputs, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in washoutComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "washout" ---
+        for thisComponent in washoutComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        thisExp.addData('washout.stopped', globalClock.getTime())
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-1.000000)
+        
         # --- Prepare to start Routine "trial" ---
         continueRoutine = True
         # update component parameters for each repeat
@@ -815,13 +1110,12 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             # update/draw components on each frame
             # Run 'Each Frame' code from rating_code
             keys = event.getKeys(keyList=['1', '2', '3', '4', '6'])
-            rating_dict = {"1": 0, "2": 1, "3": 2, "4": 3, "6": 4}
-            
             
             if keys:
                 df.at[trials.thisN, "rating"] = rating_dict[keys[0]]
                 df.at[trials.thisN, "response_time"] = timer.getTime()
-                print(f"Rating is: {int(keys[0])}")
+                df.at[trials.thisN, "button"] = keys[0]
+                print(f"Trial: {trials.thisN}. Rating is: {rating_dict[keys[0]]}")
                 continueRoutine = False
             
             # *rating_fixation_square* updates
@@ -884,10 +1178,18 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 thisComponent.setAutoDraw(False)
         thisExp.addData('rating.stopped', globalClock.getTime())
         # Run 'End Routine' code from rating_code
+        # Timeout rating
         if keys is None:
             df.at[trials.thisN, "rating"] = pd.NA
             df.at[trials.thisN, "response_time"] = pd.NA
-            print(f"Rating is: {pd.NA}")
+            df.at[trials.thisN, "button"] = pd.NA
+            print(f"Trial: {trials.thisN}. Rating is: {pd.NA}")
+           
+        # Save data
+        if not os.path.exists(f"data/{participant}"):
+            os.makedirs(f"data/{participant}")
+            
+        df.to_csv(f"data/{participant}/sub-{int(participant):02}_ses-{int(session):02}_task-video_run-{run}_events.tsv", index=False, sep="\t")
             
         
         # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
@@ -895,108 +1197,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             routineTimer.reset()
         else:
             routineTimer.addTime(-5.000000)
-        
-        # --- Prepare to start Routine "washout" ---
-        continueRoutine = True
-        # update component parameters for each repeat
-        thisExp.addData('washout.started', globalClock.getTime())
-        # Run 'Begin Routine' code from save_data
-        #if timer.getTime() > 30:
-        #    trials.finished = True
-        #    df = df.iloc[:trials.thisN + 1, :]
-        
-        if not os.path.exists(f"data/{participant}"):
-            os.makedirs(f"data/{participant}")
-            
-        df.to_csv(f"data/{participant}/sub-{int(participant):02}_ses-{int(session):02}_run-{run}_trials.txt", index_label="index", sep=",")
-        # keep track of which components have finished
-        washoutComponents = [washout_fixation_cross]
-        for thisComponent in washoutComponents:
-            thisComponent.tStart = None
-            thisComponent.tStop = None
-            thisComponent.tStartRefresh = None
-            thisComponent.tStopRefresh = None
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        # reset timers
-        t = 0
-        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
-        frameN = -1
-        
-        # --- Run Routine "washout" ---
-        routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 1.0:
-            # get current time
-            t = routineTimer.getTime()
-            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
-            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            
-            # *washout_fixation_cross* updates
-            
-            # if washout_fixation_cross is starting this frame...
-            if washout_fixation_cross.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-                # keep track of start time/frame for later
-                washout_fixation_cross.frameNStart = frameN  # exact frame index
-                washout_fixation_cross.tStart = t  # local t and not account for scr refresh
-                washout_fixation_cross.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(washout_fixation_cross, 'tStartRefresh')  # time at next scr refresh
-                # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'washout_fixation_cross.started')
-                # update status
-                washout_fixation_cross.status = STARTED
-                washout_fixation_cross.setAutoDraw(True)
-            
-            # if washout_fixation_cross is active this frame...
-            if washout_fixation_cross.status == STARTED:
-                # update params
-                pass
-            
-            # if washout_fixation_cross is stopping this frame...
-            if washout_fixation_cross.status == STARTED:
-                # is it time to stop? (based on global clock, using actual start)
-                if tThisFlipGlobal > washout_fixation_cross.tStartRefresh + 1.0-frameTolerance:
-                    # keep track of stop time/frame for later
-                    washout_fixation_cross.tStop = t  # not accounting for scr refresh
-                    washout_fixation_cross.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'washout_fixation_cross.stopped')
-                    # update status
-                    washout_fixation_cross.status = FINISHED
-                    washout_fixation_cross.setAutoDraw(False)
-            
-            # check for quit (typically the Esc key)
-            if defaultKeyboard.getKeys(keyList=["escape"]):
-                thisExp.status = FINISHED
-            if thisExp.status == FINISHED or endExpNow:
-                endExperiment(thisExp, inputs=inputs, win=win)
-                return
-            
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
-                routineForceEnded = True
-                break
-            continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in washoutComponents:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # --- Ending Routine "washout" ---
-        for thisComponent in washoutComponents:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
-        thisExp.addData('washout.stopped', globalClock.getTime())
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if routineForceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-1.000000)
         thisExp.nextEntry()
         
         if thisSession is not None:
@@ -1004,6 +1204,99 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             thisSession.sendExperimentData()
     # completed len(df) repeats of 'trials'
     
+    
+    # --- Prepare to start Routine "washout" ---
+    continueRoutine = True
+    # update component parameters for each repeat
+    thisExp.addData('washout.started', globalClock.getTime())
+    # keep track of which components have finished
+    washoutComponents = [washout_fixation_cross]
+    for thisComponent in washoutComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "washout" ---
+    routineForceEnded = not continueRoutine
+    while continueRoutine and routineTimer.getTime() < 1.0:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *washout_fixation_cross* updates
+        
+        # if washout_fixation_cross is starting this frame...
+        if washout_fixation_cross.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            washout_fixation_cross.frameNStart = frameN  # exact frame index
+            washout_fixation_cross.tStart = t  # local t and not account for scr refresh
+            washout_fixation_cross.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(washout_fixation_cross, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'washout_fixation_cross.started')
+            # update status
+            washout_fixation_cross.status = STARTED
+            washout_fixation_cross.setAutoDraw(True)
+        
+        # if washout_fixation_cross is active this frame...
+        if washout_fixation_cross.status == STARTED:
+            # update params
+            pass
+        
+        # if washout_fixation_cross is stopping this frame...
+        if washout_fixation_cross.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > washout_fixation_cross.tStartRefresh + 1-frameTolerance:
+                # keep track of stop time/frame for later
+                washout_fixation_cross.tStop = t  # not accounting for scr refresh
+                washout_fixation_cross.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'washout_fixation_cross.stopped')
+                # update status
+                washout_fixation_cross.status = FINISHED
+                washout_fixation_cross.setAutoDraw(False)
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, inputs=inputs, win=win)
+            return
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in washoutComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "washout" ---
+    for thisComponent in washoutComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    thisExp.addData('washout.stopped', globalClock.getTime())
+    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+    if routineForceEnded:
+        routineTimer.reset()
+    else:
+        routineTimer.addTime(-1.000000)
     
     # --- Prepare to start Routine "end" ---
     continueRoutine = True

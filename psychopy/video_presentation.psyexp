@@ -8,7 +8,7 @@
     <Param val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code" updates="None" name="Data filename"/>
     <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
     <Param val="" valType="str" updates="None" name="End Message"/>
-    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '999', 'run': '999'}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '999', 'run': '999', 'num_stimuli': '100'}" valType="code" updates="None" name="Experiment info"/>
     <Param val="True" valType="bool" updates="None" name="Force stereo"/>
     <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
     <Param val="" valType="str" updates="None" name="HTML path"/>
@@ -26,7 +26,7 @@
     <Param val="False" valType="bool" updates="None" name="Show mouse"/>
     <Param val="height" valType="str" updates="None" name="Units"/>
     <Param val="" valType="str" updates="None" name="Use version"/>
-    <Param val="[1536, 864]" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="[1920, 1080]" valType="list" updates="None" name="Window size (pixels)"/>
     <Param val="none" valType="str" updates="None" name="backgroundFit"/>
     <Param val="" valType="str" updates="None" name="backgroundImg"/>
     <Param val="avg" valType="str" updates="None" name="blendMode"/>
@@ -109,14 +109,14 @@
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
       <CodeComponent name="code" plugin="None">
-        <Param val="from glob import glob&amp;#10;import pandas as pd&amp;#10;import numpy as np&amp;#10;import os&amp;#10;&amp;#10;&amp;#10;num_stimuli = 100" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="from glob import glob&amp;#10;import pandas as pd&amp;#10;import numpy as np&amp;#10;import os&amp;#10;&amp;#10;&amp;#10;#num_stimuli = 100&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Before Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="participant = expInfo['participant']&amp;#10;session = expInfo['session']&amp;#10;run = expInfo['run']&amp;#10;&amp;#10;# Get images&amp;#10;video_path = f&quot;videos&quot;&amp;#10;video_list = os.listdir(video_path)&amp;#10;&amp;#10;# Intialize dataframe&amp;#10;df = pd.DataFrame()&amp;#10;df[&quot;file&quot;] = video_list&amp;#10;#df[&quot;trial&quot;] = [file.split(&quot;.&quot;)[0] for file in df[&quot;file&quot;]]&amp;#10;#df[&quot;type&quot;] = [&quot;image&quot; if &quot;.png&quot; in file else &quot;video&quot; for file in df[&quot;file&quot;]]&amp;#10;#df[&quot;category&quot;] = [file.split(&quot;_&quot;)[0] for file in df[&quot;file&quot;]]&amp;#10;df[&quot;onset&quot;] = np.empty(len(video_list)) * np.nan&amp;#10;df[&quot;duration&quot;] = np.empty(len(video_list)) * np.nan&amp;#10;df[&quot;rating&quot;] = np.empty(len(video_list)) * np.nan&amp;#10;df[&quot;response_time&quot;] = np.empty(len(video_list)) * np.nan&amp;#10;&amp;#10;&amp;#10;# Get 150 videos at random&amp;#10;random_indices = np.random.choice(np.arange(len(video_list)), size=num_stimuli, replace=False)&amp;#10;df = df.iloc[random_indices, :]&amp;#10;&amp;#10;# Random shuffle&amp;#10;df = df.sample(frac=1).reset_index(drop=True)" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="participant = expInfo['participant']&amp;#10;session = expInfo['session']&amp;#10;run = expInfo['run']&amp;#10;&amp;#10;num_stimuli = int(expInfo[&quot;num_stimuli&quot;])&amp;#10;if num_stimuli % 2 != 0:&amp;#10;    raise Exception(&quot;Num stimuli must be positive!&quot;)&amp;#10;&amp;#10;rating_order = np.random.choice([1,2], 2, replace=False)&amp;#10;rating_dicts = [&amp;#10;    {&quot;1&quot;: 0, &quot;2&quot;: 1, &quot;3&quot;: 2, &quot;4&quot;: 3, &quot;6&quot;: 4},&amp;#10;    {&quot;1&quot;: 4, &quot;2&quot;: 3, &quot;3&quot;: 2, &quot;4&quot;: 1, &quot;6&quot;: 0}&amp;#10;    ]&amp;#10;rating_dict = rating_dicts[rating_order[0] - 1]&amp;#10;&amp;#10;# Get images&amp;#10;video_path = f&quot;videos&quot;&amp;#10;video_list = os.listdir(video_path)&amp;#10;&amp;#10;# Intialize dataframe&amp;#10;df = pd.DataFrame()&amp;#10;df[&quot;file&quot;] = video_list&amp;#10;#df[&quot;trial&quot;] = [file.split(&quot;.&quot;)[0] for file in df[&quot;file&quot;]]&amp;#10;#df[&quot;type&quot;] = [&quot;image&quot; if &quot;.png&quot; in file else &quot;video&quot; for file in df[&quot;file&quot;]]&amp;#10;#df[&quot;category&quot;] = [file.split(&quot;_&quot;)[0] for file in df[&quot;file&quot;]]&amp;#10;&amp;#10;# Get videos at random&amp;#10;random_indices = np.random.choice(np.arange(len(video_list)), size=num_stimuli, replace=False)&amp;#10;df = df.iloc[random_indices, :]&amp;#10;&amp;#10;# Random shuffle&amp;#10;df = df.sample(frac=1).reset_index(drop=True)&amp;#10;&amp;#10;df[&quot;onset&quot;] = np.empty(num_stimuli) * np.nan&amp;#10;df[&quot;duration&quot;] = np.empty(num_stimuli) * np.nan&amp;#10;df[&quot;rating&quot;] = np.empty(num_stimuli) * np.nan&amp;#10;df[&quot;response_time&quot;] = np.empty(num_stimuli) * np.nan&amp;#10;df[&quot;rating_order&quot;] = np.repeat(rating_order, num_stimuli/2)&amp;#10;df[&quot;button&quot;] = np.empty(num_stimuli) * np.nan&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="## Define key mapping&amp;#10;#x_pos_dict = {&quot;1&quot;: -0.2, &quot;2&quot;: -0.1, &quot;3&quot;: 0, &quot;4&quot;: 0.1, &quot;6&quot;: 0.2}&amp;#10;#&amp;#10;## Get kepress&amp;#10;#keys = event.getKeys(keyList=['1', '2', '3', '4', '6'])&amp;#10;#&amp;#10;#if keys:&amp;#10;#    if not 'marker' in locals():&amp;#10;#        x_pos = x_pos_dict[keys[0]]&amp;#10;#        marker = visual.ShapeStim(win=win, pos=(0, -0.475), size=(0.05, 0.05), fillColor=[0, 0.75, 0], lineColor=[0, 0, 0], vertices='circle')&amp;#10;#        marker.pos = (x_pos * -1, -0.4)&amp;#10;#        marker.setAutoDraw(True)&amp;#10;#else:&amp;#10;#    if 'marker' in locals():&amp;#10;#        core.wait(0.5)&amp;#10;#        marker.setAutoDraw(False)&amp;#10;#        del marker&amp;#10;#" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
@@ -146,7 +146,7 @@
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
-        <Param val="The experiment will begin soon.&amp;#10;&amp;#10;After each video, you will see a black square. You will have 5 seconds to make a rating on the remote according to the scale shown below." valType="str" updates="constant" name="text"/>
+        <Param val="After each video, you will see a black square. You will have 5 seconds to make a rating on the remote according to the system below.&amp;#10;&amp;#10;At the halfway point, you will be asked to reverse the rating scale" valType="str" updates="constant" name="text"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
@@ -159,7 +159,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="True" valType="bool" updates="constant" name="flipHoriz"/>
         <Param val="False" valType="bool" updates="constant" name="flipVert"/>
-        <Param val="images/rating_instruction.png" valType="file" updates="constant" name="image"/>
+        <Param val="$f&quot;images/rating_instruction_{rating_order[0]}.png&quot;" valType="file" updates="constant" name="image"/>
         <Param val="linear" valType="str" updates="constant" name="interpolate"/>
         <Param val="" valType="str" updates="constant" name="mask"/>
         <Param val="instruction_image" valType="code" updates="None" name="name"/>
@@ -336,28 +336,11 @@
         <Param val="time (s)" valType="str" updates="None" name="startType"/>
         <Param val="0.0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="1.0" valType="code" updates="constant" name="stopVal"/>
+        <Param val="1" valType="code" updates="constant" name="stopVal"/>
         <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
         <Param val="from exp settings" valType="str" updates="None" name="units"/>
         <Param val="" valType="list" updates="constant" name="vertices"/>
       </PolygonComponent>
-      <CodeComponent name="save_data" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="#if timer.getTime() &gt; 30:&amp;#10;#    trials.finished = True&amp;#10;#    df = df.iloc[:trials.thisN + 1, :]&amp;#10;&amp;#10;if not os.path.exists(f&quot;data/{participant}&quot;):&amp;#10;    os.makedirs(f&quot;data/{participant}&quot;)&amp;#10;    &amp;#10;df.to_csv(f&quot;data/{participant}/sub-{int(participant):02}_ses-{int(session):02}_run-{run}_trials.txt&quot;, index_label=&quot;index&quot;, sep=&quot;,&quot;)" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="save_data" valType="code" updates="None" name="name"/>
-      </CodeComponent>
     </Routine>
     <Routine name="pause">
       <RoutineSettingsComponent name="pause" plugin="None">
@@ -540,12 +523,12 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="## Clear key buffer&amp;#10;keys = event.getKeys(keyList=['1', '2', '3', '4', '6'])&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="keys = event.getKeys(keyList=['1', '2', '3', '4', '6'])&amp;#10;rating_dict = {&quot;1&quot;: 0, &quot;2&quot;: 1, &quot;3&quot;: 2, &quot;4&quot;: 3, &quot;6&quot;: 4}&amp;#10;&amp;#10;&amp;#10;if keys:&amp;#10;    df.at[trials.thisN, &quot;rating&quot;] = rating_dict[keys[0]]&amp;#10;    df.at[trials.thisN, &quot;response_time&quot;] = timer.getTime()&amp;#10;    print(f&quot;Rating is: {int(keys[0])}&quot;)&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="keys = event.getKeys(keyList=['1', '2', '3', '4', '6'])&amp;#10;&amp;#10;if keys:&amp;#10;    df.at[trials.thisN, &quot;rating&quot;] = rating_dict[keys[0]]&amp;#10;    df.at[trials.thisN, &quot;response_time&quot;] = timer.getTime()&amp;#10;    df.at[trials.thisN, &quot;button&quot;] = keys[0]&amp;#10;    print(f&quot;Trial: {trials.thisN}. Rating is: {rating_dict[keys[0]]}&quot;)&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="if keys is None:&amp;#10;    df.at[trials.thisN, &quot;rating&quot;] = pd.NA&amp;#10;    df.at[trials.thisN, &quot;response_time&quot;] = pd.NA&amp;#10;    print(f&quot;Rating is: {pd.NA}&quot;)&amp;#10;    &amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="# Timeout rating&amp;#10;if keys is None:&amp;#10;    df.at[trials.thisN, &quot;rating&quot;] = pd.NA&amp;#10;    df.at[trials.thisN, &quot;response_time&quot;] = pd.NA&amp;#10;    df.at[trials.thisN, &quot;button&quot;] = pd.NA&amp;#10;    print(f&quot;Trial: {trials.thisN}. Rating is: {pd.NA}&quot;)&amp;#10;   &amp;#10;# Save data&amp;#10;if not os.path.exists(f&quot;data/{participant}&quot;):&amp;#10;    os.makedirs(f&quot;data/{participant}&quot;)&amp;#10;    &amp;#10;df.to_csv(f&quot;data/{participant}/sub-{int(participant):02}_ses-{int(session):02}_task-video_run-{run}_events.tsv&quot;, index=False, sep=&quot;\t&quot;)&amp;#10;    &amp;#10;" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="rating_code" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -577,6 +560,111 @@
         <Param val="" valType="list" updates="constant" name="vertices"/>
       </PolygonComponent>
     </Routine>
+    <Routine name="rating_switch">
+      <RoutineSettingsComponent name="rating_switch" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="rating_switch" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <ImageComponent name="rating_instruction_img" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$f&quot;images/rating_instruction_{rating_order[1]}.png&quot;" valType="file" updates="constant" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="rating_instruction_img" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.15)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.75, 0.5)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <TextComponent name="rating_instruction_text" plugin="None">
+        <Param val="black" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="horiz" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="rating_instruction_text" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0.25)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="For the rest of this run, please reverse the way you rate the videos. Use the rating system below.&amp;#10;&amp;#10;Press any button to continue." valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <KeyboardComponent name="rating_instruction_key_resp" plugin="None">
+        <Param val="'1', '2', '3', '4', '6'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="" valType="str" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="True" valType="bool" updates="constant" name="discard previous"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="rating_instruction_key_resp" valType="code" updates="None" name="name"/>
+        <Param val="press" valType="str" updates="constant" name="registerOn"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="1.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
+      </KeyboardComponent>
+      <CodeComponent name="rating_switch_code" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="if trials.thisN == num_stimuli / 2:&amp;#10;    rating_dict = rating_dicts[rating_order[1] - 1]&amp;#10;else:  &amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="rating_switch_code" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="waiting_for_scanner"/>
@@ -592,10 +680,12 @@
       <Param name="name" updates="None" val="trials" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
+    <Routine name="rating_switch"/>
+    <Routine name="washout"/>
     <Routine name="trial"/>
     <Routine name="rating"/>
-    <Routine name="washout"/>
     <LoopTerminator name="trials"/>
+    <Routine name="washout"/>
     <Routine name="end"/>
   </Flow>
 </PsychoPy2experiment>
