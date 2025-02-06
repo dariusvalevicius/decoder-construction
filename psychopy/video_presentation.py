@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on January 29, 2025, at 16:52
+    on February 06, 2025, at 13:00
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -345,15 +345,14 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     rating_dict = rating_dicts[rating_order[0] - 1]
     
     # Get images
-    video_path = f"videos"
-    video_list = os.listdir(video_path)
+    video_path = "videos"
+    #video_list = os.listdir(video_path)
+    video_list = [os.path.basename(file) for file in glob("videos/*/*.mp4")]
     
     # Intialize dataframe
     df = pd.DataFrame()
     df["file"] = video_list
-    #df["trial"] = [file.split(".")[0] for file in df["file"]]
-    #df["type"] = ["image" if ".png" in file else "video" for file in df["file"]]
-    #df["category"] = [file.split("_")[0] for file in df["file"]]
+    df["category"] = [file.split("_")[0] for file in video_list]
     
     # Get videos at random
     random_indices = np.random.choice(np.arange(len(video_list)), size=num_stimuli, replace=False)
@@ -980,7 +979,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         movie = visual.MovieStim3(
             win=win, name='movie', units='',
             noAudio = True,
-            filename=os.path.join(video_path, df.at[trials.thisN, "file"]),
+            filename=os.path.join(video_path, df.at[trials.thisN, "category"], df.at[trials.thisN, "file"]),
             ori=0.0, pos=(0, 0), opacity=1.0,
             loop=False, anchor='center',
             size=(1.5, 1.0),
